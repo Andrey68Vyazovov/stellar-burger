@@ -1,6 +1,5 @@
 import { Preloader } from '@ui';
 import { FeedUI } from '@ui-pages';
-import { TOrder } from '@utils-types';
 import { FC, useEffect } from 'react';
 import { useDispatch, useSelector } from '../../services/store';
 import {
@@ -11,9 +10,8 @@ import {
 
 export const Feed: FC = () => {
   const dispatch = useDispatch();
-  const isLoading: boolean = useSelector(getIsOrderLoading);
-
-  let orders: TOrder[] = useSelector(getOrders);
+  const isLoading = useSelector(getIsOrderLoading);
+  const orders = useSelector(getOrders);
 
   useEffect(() => {
     dispatch(loadAllOrders());

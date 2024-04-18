@@ -1,4 +1,4 @@
-import { TConstructorIngredient } from '@utils-types';
+import { TConstructorIngredient, TIngredient } from '@utils-types';
 
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { nanoid } from 'nanoid';
@@ -21,18 +21,20 @@ export const constructorSlice = createSlice({
   name: 'constructorBurger',
   initialState,
   reducers: {
-    addIngredient: (state, action) => {
-      switch (action.payload.type) {
-        case 'bun':
-          state.formulaBurger.bun = action.payload;
-          break;
-        case 'main':
-        case 'sauce':
-          state.formulaBurger.ingredients.push({
-            ...action.payload,
-            id: nanoid()
-          });
-      }
+    addIngredient: {
+      reducer: (state, action: PayloadAction<TConstructorIngredient>) => {
+        switch (action.payload.type) {
+          case 'bun':
+            state.formulaBurger.bun = action.payload;
+            break;
+          case 'main':
+          case 'sauce':
+            state.formulaBurger.ingredients.push(action.payload);
+        }
+      },
+      prepare: (ingredient: TIngredient) => ({
+        payload: { ...ingredient, id: nanoid() }
+      })
     },
     deleteIngredient: (state, action) => {
       state.formulaBurger.ingredients = state.formulaBurger.ingredients.filter(
