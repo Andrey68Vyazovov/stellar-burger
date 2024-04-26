@@ -1,4 +1,8 @@
-import { TNewOrderResponse, orderBurgerApi, getOrderByNumberApi } from '@api';
+import {
+  TNewOrderResponse,
+  orderBurgerApi,
+  getOrderByNumberApi
+} from '../../utils/burger-api';
 import { PayloadAction, createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { TOrder } from '@utils-types';
 
@@ -7,13 +11,13 @@ export type TOrderState = {
   orderState: TOrder | null;
 };
 
-const initialState: TOrderState = {
+export const initialState: TOrderState = {
   orderRequest: false,
   orderState: null
 };
 
 export const getOrderByNumberThunk = createAsyncThunk(
-  'oreder/getOrderNumber',
+  'order/getOrderNumber',
   (data: number) => getOrderByNumberApi(data)
 );
 
